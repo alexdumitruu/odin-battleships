@@ -23,5 +23,15 @@ function Ship() {
 }
 
 function Gameboard() {
-    
+
+}
+
+function Player() {
+
+}
+
+module.exports = {
+    Ship,
+    Gameboard,
+    Player,
 }
