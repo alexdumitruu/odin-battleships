@@ -23,8 +23,26 @@ function Ship() {
 }
 
 function Gameboard() {
+    function createGameboard() {
+        const gb = Array.from({ length: 10 }, () => new Array(10).fill(0));
+        console.log(gameboard);
+        let gameboard = {
+            gameboard: gb,
 
+            placeShip: function (startingRow, startingCol) {
+                
+            }
+        }
+        
+        return gb;
+    }
+
+    return {
+        createGameboard,
+    }
 }
+
+Gameboard().createGameboard();
 
 function Player() {
 
