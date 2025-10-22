@@ -19,37 +19,66 @@ function Ship() {
     };
     return ship;
   }
-  return { createShip, }
+  return { createShip };
 }
 
 function Gameboard() {
-    function createGameboard() {
-        const gb = Array.from({ length: 10 }, () => new Array(10).fill(0));
-        console.log(gameboard);
-        let gameboard = {
-            gameboard: gb,
+  function createGameboard() {
+    const grid = Array.from({ length: 10 }, () => new Array(10).fill(null));
+    console.log(grid);
+    let gameboard = {
+      gameboard: grid,
+      placedShips: [],
+      missedAttacks: [],
 
-            placeShip: function (startingRow, startingCol) {
-                
-            }
+      placeShip: function (ship, x, y, orientation) {
+        let coordinates = [];
+        if (orientation === "horizontal") {
+          for (let i = 0; i < ship.length; i++) {
+            coordinates.push([x + i, y]);
+          }
+        } else if (orientation === "vertical") {
+          for (let i = 0; i < ship.length; i++) {
+            coordinates.push([x, y + i]);
+          }
         }
-        
-        return gb;
-    }
 
-    return {
-        createGameboard,
-    }
+        for (const coord of coordinates) {
+          const [x, y] = coord;
+
+          if (x < 0 || x > 9 || y < 0 || y > 9) {
+            return false;
+          }
+          if (this.gameboard[y][x] !== null) {
+            return false;
+          }
+        }
+
+        for (const coord of coordinates) {
+          const [x, y] = coord;
+          this.gameboard[y][x] = ship;
+        }
+        this.placedShips.push(ship);
+        return true;
+      },
+
+      receiveAttack: function (x, y) {},
+    };
+
+    return gameboard;
+  }
+
+  return {
+    createGameboard,
+  };
 }
 
 Gameboard().createGameboard();
 
-function Player() {
-
-}
+function Player() {}
 
 module.exports = {
-    Ship,
-    Gameboard,
-    Player,
-}
+  Ship,
+  Gameboard,
+  Player,
+};
