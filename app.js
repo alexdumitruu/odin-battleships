@@ -8,7 +8,7 @@ function Ship() {
       isSunk: function () {
         if (this.nrOfTimesHit >= this.length) {
           this.sunk = true;
-        } else return;
+        }
       },
 
       hit: function () {
@@ -30,7 +30,7 @@ function Gameboard() {
       gameboard: grid,
       placedShips: [],
       missedAttacks: [],
-      sunkenShips:[],
+      sunkenShips: [],
 
       placeShip: function (ship, x, y, orientation) {
         let coordinates = [];
@@ -63,19 +63,26 @@ function Gameboard() {
         return true;
       },
 
-      receiveAttack: function(x, y) {
+      receiveAttack: function (x, y) {
         if (this.gameboard[y][x] !== null) {
           this.gameboard[y][x].hit();
-          if (this.gameboard[y][x].isSunk()) this.sunkenShips.push(this.gameboard[y][x]);
-          if (this.sunkenShips.length === this.placedShips.length) {
-            console.log("All ships have been sunk!");
-            return;
+          if (this.gameboard[y][x].sunk) {
+            if (!this.sunkenShips.includes(this.gameboard[y][x])) {
+              this.sunkenShips.push(this.gameboard[y][x]);
+            }
           }
-        }
-        else {
+          this.gameboard[y][x] = "hit";
+          return "hit";
+        } else {
           this.missedAttacks.push([x, y]);
+          this.gameboard[y][x] = "miss";
+          return "miss";
         }
-      }    
+      },
+
+      allShipsSunk: function () {
+        return this.placedShips.length === this.sunkenShips.length;
+      },
     };
 
     return gameboard;
