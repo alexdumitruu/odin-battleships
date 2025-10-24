@@ -30,6 +30,7 @@ function Gameboard() {
       gameboard: grid,
       placedShips: [],
       missedAttacks: [],
+      sunkenShips:[],
 
       placeShip: function (ship, x, y, orientation) {
         let coordinates = [];
@@ -62,7 +63,19 @@ function Gameboard() {
         return true;
       },
 
-      receiveAttack: function (x, y) {},
+      receiveAttack: function(x, y) {
+        if (this.gameboard[y][x] !== null) {
+          this.gameboard[y][x].hit();
+          if (this.gameboard[y][x].isSunk()) this.sunkenShips.push(this.gameboard[y][x]);
+          if (this.sunkenShips.length === this.placedShips.length) {
+            console.log("All ships have been sunk!");
+            return;
+          }
+        }
+        else {
+          this.missedAttacks.push([x, y]);
+        }
+      }    
     };
 
     return gameboard;
