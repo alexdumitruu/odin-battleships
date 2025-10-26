@@ -95,7 +95,29 @@ function Gameboard() {
 
 Gameboard().createGameboard();
 
-function Player() {}
+function Player() {
+  function createPlayer(type) {
+    let player = {
+      type: type,
+      board: Gameboard().createGameboard(),
+
+      computerAttack: function (enemyBoard) {
+        let flag = false;
+        while (flag !== true) {
+          const x = Math.floor(Math.random() * 10);
+          const y = Math.floor(Math.random() * 10);
+          const spot = enemyBoard.gameboard[y][x];
+          if (spot !== "hit" && spot !== "miss") {
+            flag = true;
+            enemyBoard.receiveAttack(x, y);
+          }
+        }
+      },
+    };
+    return player;
+  }
+  return { createPlayer };
+}
 
 module.exports = {
   Ship,
