@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Battleship</title>
+    <style rel="stylesheet" href="styles.css"></style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              water: "rgb(59 130 246)",
+              ship: "rgb(107 114 128)",
+              hit: "rgb(220 38 38)",
+              miss: "rgb(156 163 175)",
+              "water-hover": "rgb(96 165 250)",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-gray-900 text-gray-100 font-sans min-h-screen flex items-center justify-center p-4"
+  >
+    <main class="flex flex-col items-center gap-6 w-full max-w-4xl">
+      <h1 class="text-4xl font-bold text-white">Battleship</h1>
+
+      <!-- game status & controls -->
+      <div
+        class="flex flex-col md:flex-row justify-between items-center w-full gap-4"
+      >
+        <h2
+          id="message-area"
+          class="text-xl font-semibold text-yellow-300 h-8 text-center"
+        >
+          Place your ships!
+        </h2>
+        <div class="flex gap-4">
+          <button
+            id="randomize-ships"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all"
+          >
+            Randomize Ships
+          </button>
+          <button
+            id="new-game"
+            class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all"
+          >
+            New Game
+          </button>
+        </div>
+      </div>
+
+      <!-- game boards -->
+      <div
+        class="flex flex-col md:flex-row gap-8 md:gap-16 w-full justify-center"
+      >
+        <!-- player board -->
+        <div class="flex flex-col items-center">
+          <h3 class="text-2xl font-semibold mb-3">Your Board</h3>
+          <div
+            id="player-board"
+            class="grid grid-cols-10 gap-1 bg-gray-800 p-2 rounded-lg shadow-inner"
+          >
+            <!-- player cells by js -->
+          </div>
+        </div>
+
+        <!-- computer board -->
+        <div class="flex flex-col items-center">
+          <h3 class="text-2xl font-semibold mb-3">Computer's Board</h3>
+          <div
+            id="computer-board"
+            class="grid grid-cols-10 gap-1 bg-gray-800 p-2 rounded-lg shadow-inner"
+          >
+            <!-- computer cells rendered here by js -->
+          </div>
+        </div>
+      </div>
+    </main>
+    <script type="module" src="ui.js"></script>
+  </body>
+</html>

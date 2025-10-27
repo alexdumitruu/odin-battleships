@@ -1,4 +1,4 @@
-function Ship() {
+export function Ship() {
   function createShip(length, nrOfTimesHit = 0, sunk = false) {
     let ship = {
       length: length,
@@ -22,7 +22,7 @@ function Ship() {
   return { createShip };
 }
 
-function Gameboard() {
+export function Gameboard() {
   function createGameboard() {
     const grid = Array.from({ length: 10 }, () => new Array(10).fill(null));
     console.log(grid);
@@ -64,16 +64,21 @@ function Gameboard() {
       },
 
       receiveAttack: function (x, y) {
-        if (this.gameboard[y][x] !== null) {
-          this.gameboard[y][x].hit();
-          if (this.gameboard[y][x].sunk) {
-            if (!this.sunkenShips.includes(this.gameboard[y][x])) {
-              this.sunkenShips.push(this.gameboard[y][x]);
+        const target = this.gameboard[y][x];
+        if (target === "hit" || target === "miss") {
+          return "already attacked";
+        }
+        if (typeof target === "object" && target !== null) {
+          target.hit();
+          if (target.sunk) {
+            if (!this.sunkenShips.includes(target)) {
+              this.sunkenShips.push(target);
             }
           }
           this.gameboard[y][x] = "hit";
           return "hit";
-        } else {
+        }
+        if (target === null) {
           this.missedAttacks.push([x, y]);
           this.gameboard[y][x] = "miss";
           return "miss";
@@ -93,9 +98,7 @@ function Gameboard() {
   };
 }
 
-Gameboard().createGameboard();
-
-function Player() {
+export function Player() {
   function createPlayer(type) {
     let player = {
       type: type,
@@ -119,8 +122,3 @@ function Player() {
   return { createPlayer };
 }
 
-module.exports = {
-  Ship,
-  Gameboard,
-  Player,
-};
